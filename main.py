@@ -12,14 +12,7 @@ import io
 import textwrap
 import base64
 
-# Get Groq API key
-if 'GROQ_API_KEY' in os.environ:
-    groq_api_key = os.environ['GROQ_API_KEY']
-else:
-    groq_api_key = st.text_input("Enter GROQ API key:", type="password")
-    if not groq_api_key:
-        st.error("Please enter your GROQ API key.")
-        st.stop()
+
 
 # Pydantic model for structured output
 class Excerpt(BaseModel):
@@ -125,9 +118,19 @@ def get_image_download_link(image_content, filename, text):
     href = f'<a href="data:image/png;base64,{image_base64}" download="{filename}">{text}</a>'
     return href
 
+st.title("YouTube Excerpt Generator")
+# Get Groq API key
+if 'GROQ_API_KEY' in os.environ:
+    groq_api_key = os.environ['GROQ_API_KEY']
+else:
+    groq_api_key = st.text_input("Enter GROQ API key:", type="password")
+    if not groq_api_key:
+        st.error("Please enter your GROQ API key.")
+        st.stop()
+
 # Update the main function to use the new PDF generator
 def main():
-    st.title("YouTube Excerpt Generator")
+    
 
     youtube_url = st.text_input("Enter YouTube Video URL:")
 
